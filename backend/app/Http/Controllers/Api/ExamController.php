@@ -70,9 +70,7 @@ class ExamController extends Controller
      */
     public function getUnitQuestions(int $unitId)
     {
-        $unit = LearningUnit::with(['learningOutcomes.questions' => function($query) {
-            $query->where('is_active', true);
-        }])->find($unitId);
+        $unit = LearningUnit::with(['learningOutcomes.questions'])->find($unitId);
         
         if (!$unit) {
             return response()->json(['error' => '学习单元不存在'], 404);
