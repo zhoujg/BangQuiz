@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>学习分析</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- 通过率预测 -->
+  <ion-card *ngIf="prediction">
+    <ion-card-header>
+      <ion-card-title>考试通过率预测</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="prediction-circle">
+        <h1 [style.color]="prediction.pass_probability >= 80 ? 'green' : prediction.pass_probability >= 60 ? 'orange' : 'red'">
+          {{ prediction.pass_probability || '数据不足' }}{{ prediction.pass_probability ? '%' : '' }}
+        </h1>
+      </div>
+      
+      <ion-list>
+        <ion-item>
+          <ion-label>整体正确率</ion-label>
+          <ion-note slot="end">{{ prediction.overall_accuracy }}%</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label>已完成题目</ion-label>
+          <ion-note slot="end">{{ prediction.total_questions_completed }}</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label>严重弱点</ion-label>
+          <ion-note slot="end" color="danger">{{ prediction.critical_weaknesses }}</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label>一般弱点</ion-label>
+          <ion-note slot="end" color="warning">{{ prediction.weak_points }}</ion-note>
+        </ion-item>
+      </ion-list>
+
+      <ion-card color="light">
+        <ion-card-content>
+          <ion-text>
+            <p><strong>建议：</strong>{{ prediction.recommendation }}</p>
+          </ion-text>
+        </ion-card-content>
+      </ion-card>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- 弱点分析 -->
+  <ion-card *ngIf="weaknessReport">
+    <ion-card-header>
+      <ion-card-title>知识点掌握情况</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let detail of weaknessReport.details">
+          <ion-label class="ion-text-wrap">
+            <h3>{{ detail.knowledge_point }}</h3>
+            <p>正确率: {{ detail.accuracy_rate.toFixed(1) }}% ({{ detail.total_attempts }}题)</p>
+          </ion-label>
+          <ion-chip slot="end" [color]="getWeaknessColor(detail.weakness_level)">
+            {{ getWeaknessLabel(detail.weakness_level) }}
+          </ion-chip>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

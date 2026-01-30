@@ -1,0 +1,149 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>学习路径</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="showLearningTips()">
+        <ion-icon name="help-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- 认证级别选择 -->
+  <ion-segment [(ngModel)]="selectedLevel" (ionChange)="loadLearningUnits()">
+    <ion-segment-button value="level1">
+      <ion-label>
+        <div>Level 1 基础</div>
+        <small>{{ level1Progress }}%</small>
+      </ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="level2">
+      <ion-label>
+        <div>Level 2 进阶</div>
+        <small>{{ level2Progress }}%</small>
+      </ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <!-- 学习建议提示 -->
+  <ion-card color="light" class="learning-tip">
+    <ion-card-content>
+      <ion-icon name="bulb" color="warning"></ion-icon>
+      <span *ngIf="selectedLevel === 'level1'">
+        建议按顺序学习，知识点有递进关系。也可以根据需要跳跃学习。
+      </span>
+      <span *ngIf="selectedLevel === 'level2'">
+        可以自由选择学习顺序。遇到不懂的概念，随时回Level 1复习。
+      </span>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- 整体进度 -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        {{ selectedLevel === 'level1' ? 'Level 1 Foundation' : 'Level 2 Practitioner' }}
+      </ion-card-title>
+      <ion-card-subtitle>
+        整体进度: {{ selectedLevel === 'level1' ? level1Progress : level2Progress }}%
+      </ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-progress-bar 
+        [value]="(selectedLevel === 'level1' ? level1Progress : level2Progress) / 100"
+        [color]="selectedLevel === 'level1' ? 'success' : 'primary'">
+      </ion-progress-bar>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- 学习单元列表 -->
+  <div class="learning-path-container">
+    <div *ngFor="let unit of learningUnits; let i = index" class="unit-card">
+      <!-- 连接线 -->
+      <div *ngIf="i > 0" class="connector-line"></div>
+      
+      <ion-card 
+        [class.completed]="unit.progress >= 100" 
+        [class.in-progress]="unit.progress > 0 && unit.progress < 100"
+        [class.not-started]="unit.progress === 0">
+        <ion-card-header>
+          <div class="unit-header">
+            <div class="unit-info">
+              <ion-card-subtitle>{{ unit.unit_number }}</ion-card-subtitle>
+              <ion-card-title>{{ unit.title }}</ion-card-title>
+            </div>
+            <div class="progress-circle" [class.completed]="unit.progress >= 100">
+              <span>{{ unit.progress }}%</span>
+            </div>
+          </div>
+        </ion-card-header>
+        
+        <ion-card-content>
+          <p class="unit-purpose">{{ unit.purpose }}</p>
+          
+          <!-- 学习成果列表 -->
+          <div class="outcomes-section">
+            <h4>学习成果 ({{ unit.learning_outcomes?.length || 0 }}个)</h4>
+            <ion-list>
+              <ion-item *ngFor="let outcome of unit.learning_outcomes" lines="none" class="outcome-item">
+                <ion-icon 
+                  slot="start" 
+                  [name]="getOutcomeIcon(outcome.mastery_level)"
+                  [color]="getOutcomeColor(outcome.mastery_level)">
+                </ion-icon>
+                <ion-label class="ion-text-wrap">
+                  <p class="outcome-code">{{ outcome.outcome_code }}</p>
+                  <p class="outcome-desc">{{ outcome.description }}</p>
+                  <ion-progress-bar 
+                    [value]="outcome.mastery_level / 100"
+                    [color]="getOutcomeColor(outcome.mastery_level)">
+                  </ion-progress-bar>
+                </ion-label>
+                <ion-chip slot="end" [color]="getBloomColor(outcome.bloom_level)" size="small">
+                  {{ getBloomLabel(outcome.bloom_level) }}
+                </ion-chip>
+              </ion-item>
+            </ion-list>
+          </div>
+
+          <!-- 操作按钮 -->
+          <div class="action-buttons">
+            <ion-button expand="block" (click)="startUnit(unit.id)">
+              <ion-icon slot="start" name="play"></ion-icon>
+              {{ unit.progress > 0 ? '继续练习' : '开始学习' }}
+            </ion-button>
+            <ion-button expand="block" fill="outline" (click)="viewUnitDetails(unit.id)">
+              <ion-icon slot="start" name="information-circle"></ion-icon>
+              查看详情
+            </ion-button>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+
+  <!-- 模拟考试入口 -->
+  <ion-card color="tertiary">
+    <ion-card-header>
+      <ion-card-title>准备好了吗？</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>完成所有单元后，可以尝试模拟考试</p>
+      <ion-button 
+        expand="block" 
+        color="light"
+        [disabled]="(selectedLevel === 'level1' ? level1Progress : level2Progress) < 70"
+        (click)="goToMockExam()">
+        <ion-icon slot="start" name="school"></ion-icon>
+        {{ selectedLevel === 'level1' ? 'Level 1' : 'Level 2' }} 模拟考试
+      </ion-button>
+      <p class="hint" *ngIf="(selectedLevel === 'level1' ? level1Progress : level2Progress) < 70">
+        建议完成70%以上再参加模拟考试
+      </p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

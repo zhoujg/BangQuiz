@@ -1,0 +1,170 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>TOGAF Master</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="openProfile()">
+        <ion-icon name="person-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <h1>全球最专业的TOGAF认证平台</h1>
+    <p>基于官方认证大纲，科学的学习路径，助你高效通过考试</p>
+  </div>
+
+  <!-- 考试包选择 -->
+  <ion-grid>
+    <ion-row>
+      <!-- Level 1 -->
+      <ion-col size="12" size-md="6">
+        <ion-card class="level-card level1" button (click)="selectLevel('level1')">
+          <div class="level-badge">Level 1</div>
+          <ion-card-header>
+            <ion-card-title>Foundation 基础级</ion-card-title>
+            <ion-card-subtitle>掌握企业架构核心概念</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <div class="level-stats">
+              <div class="stat-item">
+                <ion-icon name="book"></ion-icon>
+                <span>8个学习单元</span>
+              </div>
+              <div class="stat-item">
+                <ion-icon name="help-circle"></ion-icon>
+                <span>300+道题目</span>
+              </div>
+              <div class="stat-item">
+                <ion-icon name="time"></ion-icon>
+                <span>40题/60分钟</span>
+              </div>
+            </div>
+            
+            <ion-progress-bar [value]="level1Progress / 100" color="success"></ion-progress-bar>
+            <p class="progress-text">学习进度: {{ level1Progress }}%</p>
+
+            <ion-button expand="block" color="success">
+              {{ level1Progress > 0 ? '继续学习' : '开始学习' }}
+              <ion-icon slot="end" name="arrow-forward"></ion-icon>
+            </ion-button>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+      <!-- Level 2 -->
+      <ion-col size="12" size-md="6">
+        <ion-card 
+          class="level-card level2" 
+          button 
+          (click)="selectLevel('level2')">
+          <div class="level-badge">Level 2</div>
+          <ion-card-header>
+            <ion-card-title>Practitioner 实践级</ion-card-title>
+            <ion-card-subtitle>应用TOGAF进行架构开发</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <div class="level-stats">
+              <div class="stat-item">
+                <ion-icon name="book"></ion-icon>
+                <span>8个学习单元</span>
+              </div>
+              <div class="stat-item">
+                <ion-icon name="help-circle"></ion-icon>
+                <span>200+道场景题</span>
+              </div>
+              <div class="stat-item">
+                <ion-icon name="time"></ion-icon>
+                <span>8题/90分钟</span>
+              </div>
+            </div>
+            
+            <ion-progress-bar [value]="level2Progress / 100" color="primary"></ion-progress-bar>
+            <p class="progress-text">学习进度: {{ level2Progress }}%</p>
+
+            <ion-button expand="block" color="primary">
+              {{ level2Progress > 0 ? '继续学习' : '开始学习' }}
+              <ion-icon slot="end" name="arrow-forward"></ion-icon>
+            </ion-button>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- 快速入口 -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>快速入口</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6" size-md="3">
+            <ion-button expand="block" fill="outline" (click)="goToLearningPath()">
+              <ion-icon slot="start" name="map"></ion-icon>
+              学习路径
+            </ion-button>
+          </ion-col>
+          <ion-col size="6" size-md="3">
+            <ion-button expand="block" fill="outline" (click)="goToMockExam()">
+              <ion-icon slot="start" name="school"></ion-icon>
+              模拟考试
+            </ion-button>
+          </ion-col>
+          <ion-col size="6" size-md="3">
+            <ion-button expand="block" fill="outline" (click)="goToAnalysis()">
+              <ion-icon slot="start" name="analytics"></ion-icon>
+              学习分析
+            </ion-button>
+          </ion-col>
+          <ion-col size="6" size-md="3">
+            <ion-button expand="block" fill="outline" (click)="goToADMMap()">
+              <ion-icon slot="start" name="git-network"></ion-icon>
+              ADM地图
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- 学习统计 -->
+  <ion-card *ngIf="userStats">
+    <ion-card-header>
+      <ion-card-title>我的学习统计</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6" size-md="3">
+            <div class="stat-box">
+              <h2>{{ userStats.totalQuestions }}</h2>
+              <p>已完成题目</p>
+            </div>
+          </ion-col>
+          <ion-col size="6" size-md="3">
+            <div class="stat-box">
+              <h2>{{ userStats.accuracy }}%</h2>
+              <p>整体正确率</p>
+            </div>
+          </ion-col>
+          <ion-col size="6" size-md="3">
+            <div class="stat-box">
+              <h2>{{ userStats.studyDays }}</h2>
+              <p>连续学习天数</p>
+            </div>
+          </ion-col>
+          <ion-col size="6" size-md="3">
+            <div class="stat-box">
+              <h2>{{ userStats.passProbability }}%</h2>
+              <p>预测通过率</p>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

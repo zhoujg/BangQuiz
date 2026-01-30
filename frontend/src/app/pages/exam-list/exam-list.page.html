@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>选择测验</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list>
+    <ion-item *ngFor="let exam of exams" button (click)="startExam(exam.id)">
+      <ion-label class="ion-text-wrap">
+        <h2>{{ exam.title }}</h2>
+        <p>{{ exam.description }}</p>
+        <ion-note>
+          {{ exam.question_count }}题 · {{ exam.time_limit }}分钟 · 及格分{{ exam.pass_score }}
+        </ion-note>
+      </ion-label>
+      <ion-chip slot="end" *ngIf="exam.chapter">
+        第{{ exam.chapter }}章
+      </ion-chip>
+    </ion-item>
+  </ion-list>
+</ion-content>

@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>登录</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="login-container">
+    <div class="logo-section">
+      <h1>TOGAF Master</h1>
+      <p>全球最专业的TOGAF认证平台</p>
+    </div>
+
+    <ion-card>
+      <ion-card-content>
+        <form (ngSubmit)="login()">
+          <ion-item>
+            <ion-label position="floating">邮箱</ion-label>
+            <ion-input 
+              type="email" 
+              [(ngModel)]="email" 
+              name="email"
+              required>
+            </ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">密码</ion-label>
+            <ion-input 
+              type="password" 
+              [(ngModel)]="password" 
+              name="password"
+              required>
+            </ion-input>
+          </ion-item>
+
+          <ion-text color="danger" *ngIf="errorMessage">
+            <p class="error-message">{{ errorMessage }}</p>
+          </ion-text>
+
+          <ion-button 
+            expand="block" 
+            type="submit" 
+            [disabled]="isLoading"
+            class="login-button">
+            <ion-spinner *ngIf="isLoading" name="crescent"></ion-spinner>
+            <span *ngIf="!isLoading">登录</span>
+          </ion-button>
+        </form>
+
+        <div class="register-link">
+          <p>还没有账号？ <a (click)="goToRegister()">立即注册</a></p>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

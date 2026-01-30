@@ -1,0 +1,74 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>刷题练习</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-card *ngIf="question">
+    <!-- 题目场景 -->
+    <ion-card-header *ngIf="question.scenario">
+      <ion-card-subtitle>场景案例</ion-card-subtitle>
+      <ion-text color="medium">
+        <p>{{ question.scenario }}</p>
+      </ion-text>
+    </ion-card-header>
+
+    <!-- 题目内容 -->
+    <ion-card-content>
+      <h2>{{ question.content }}</h2>
+      
+      <!-- 选项 -->
+      <ion-radio-group [(ngModel)]="selectedAnswer" [disabled]="showResult">
+        <ion-item *ngFor="let option of question.options | keyvalue">
+          <ion-label class="ion-text-wrap">
+            <strong>{{ option.key }}.</strong> {{ option.value }}
+          </ion-label>
+          <ion-radio slot="start" [value]="option.key"></ion-radio>
+        </ion-item>
+      </ion-radio-group>
+
+      <!-- 结果显示 -->
+      <div *ngIf="showResult" class="result-section">
+        <ion-chip [color]="isCorrect ? 'success' : 'danger'">
+          <ion-label>{{ isCorrect ? '✓ 回答正确' : '✗ 回答错误' }}</ion-label>
+        </ion-chip>
+        
+        <ion-card color="light">
+          <ion-card-header>
+            <ion-card-subtitle>详细解析</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            {{ explanation }}
+          </ion-card-content>
+        </ion-card>
+      </div>
+
+      <!-- 按钮 -->
+      <div class="button-group">
+        <ion-button 
+          *ngIf="!showResult" 
+          expand="block" 
+          (click)="submitAnswer()"
+          [disabled]="!selectedAnswer">
+          提交答案
+        </ion-button>
+        
+        <ion-button 
+          *ngIf="showResult" 
+          expand="block" 
+          (click)="nextQuestion()">
+          下一题
+        </ion-button>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- 知识点标签 -->
+  <ion-chip *ngIf="question" color="primary">
+    <ion-label>{{ question.knowledge_point }}</ion-label>
+  </ion-chip>
+  <ion-chip *ngIf="question" [color]="question.difficulty === 'easy' ? 'success' : question.difficulty === 'medium' ? 'warning' : 'danger'">
+    <ion-label>{{ question.difficulty === 'easy' ? '简单' : question.difficulty === 'medium' ? '中等' : '困难' }}</ion-label>
+  </ion-chip>
+</ion-content>

@@ -1,0 +1,80 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>注册</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="register-container">
+    <div class="logo-section">
+      <h1>创建账号</h1>
+      <p>开始你的TOGAF认证之旅</p>
+    </div>
+
+    <ion-card>
+      <ion-card-content>
+        <form (ngSubmit)="register()">
+          <ion-item>
+            <ion-label position="floating">姓名</ion-label>
+            <ion-input 
+              type="text" 
+              [(ngModel)]="name" 
+              name="name"
+              required>
+            </ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">邮箱</ion-label>
+            <ion-input 
+              type="email" 
+              [(ngModel)]="email" 
+              name="email"
+              required>
+            </ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">密码（至少8个字符）</ion-label>
+            <ion-input 
+              type="password" 
+              [(ngModel)]="password" 
+              name="password"
+              required>
+            </ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">确认密码</ion-label>
+            <ion-input 
+              type="password" 
+              [(ngModel)]="passwordConfirmation" 
+              name="passwordConfirmation"
+              required>
+            </ion-input>
+          </ion-item>
+
+          <ion-text color="danger" *ngIf="errorMessage">
+            <p class="error-message">{{ errorMessage }}</p>
+          </ion-text>
+
+          <ion-button 
+            expand="block" 
+            type="submit" 
+            [disabled]="isLoading"
+            class="register-button">
+            <ion-spinner *ngIf="isLoading" name="crescent"></ion-spinner>
+            <span *ngIf="!isLoading">注册</span>
+          </ion-button>
+        </form>
+
+        <div class="login-link">
+          <p>已有账号？ <a (click)="goToLogin()">立即登录</a></p>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

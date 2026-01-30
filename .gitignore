@@ -1,0 +1,251 @@
+# ============================================
+# TOGAF Master - 项目 .gitignore
+# ============================================
+
+# ============================================
+# 操作系统文件
+# ============================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# ============================================
+# IDE 和编辑器
+# ============================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+*.sublime-project
+*.sublime-workspace
+
+# ============================================
+# Laravel 后端
+# ============================================
+backend/vendor/
+backend/node_modules/
+backend/.env
+backend/.env.backup
+backend/.phpunit.result.cache
+backend/Homestead.json
+backend/Homestead.yaml
+backend/npm-debug.log
+backend/yarn-error.log
+backend/storage/*.key
+backend/storage/app/*
+!backend/storage/app/.gitignore
+!backend/storage/app/public/
+backend/storage/framework/cache/*
+!backend/storage/framework/cache/.gitignore
+backend/storage/framework/sessions/*
+!backend/storage/framework/sessions/.gitignore
+backend/storage/framework/testing/*
+!backend/storage/framework/testing/.gitignore
+backend/storage/framework/views/*
+!backend/storage/framework/views/.gitignore
+backend/storage/logs/*
+!backend/storage/logs/.gitignore
+backend/bootstrap/cache/*
+!backend/bootstrap/cache/.gitignore
+backend/public/storage
+backend/public/hot
+backend/.phpstorm.meta.php
+backend/_ide_helper.php
+backend/_ide_helper_models.php
+
+# ============================================
+# Angular/Ionic 前端
+# ============================================
+frontend/node_modules/
+frontend/dist/
+frontend/www/
+frontend/.angular/
+frontend/.ionic/
+frontend/platforms/
+frontend/plugins/
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/lerna-debug.log*
+frontend/.pnpm-debug.log*
+frontend/coverage/
+frontend/.nyc_output/
+frontend/.grunt/
+frontend/bower_components/
+frontend/.lock-wscript/
+frontend/build/Release/
+frontend/.npm/
+frontend/.eslintcache
+frontend/.stylelintcache
+frontend/.node_repl_history
+frontend/*.tgz
+frontend/.yarn-integrity
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+frontend/.cache/
+frontend/.parcel-cache/
+frontend/.next/
+frontend/out/
+frontend/.nuxt/
+frontend/.vuepress/dist/
+frontend/.serverless/
+frontend/.fusebox/
+frontend/.dynamodb/
+frontend/.tern-port
+frontend/.vscode-test
+frontend/.yarn/cache
+frontend/.yarn/unplugged
+frontend/.yarn/build-state.yml
+frontend/.yarn/install-state.gz
+frontend/.pnp.*
+
+# ============================================
+# TOGAF 前端（备用）
+# ============================================
+togaf-frontend/node_modules/
+togaf-frontend/dist/
+togaf-frontend/www/
+togaf-frontend/.angular/
+togaf-frontend/.ionic/
+togaf-frontend/platforms/
+togaf-frontend/plugins/
+togaf-frontend/npm-debug.log*
+togaf-frontend/yarn-debug.log*
+togaf-frontend/yarn-error.log*
+
+# ============================================
+# 日志文件
+# ============================================
+*.log
+logs/
+*.log.*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+pnpm-debug.log*
+
+# ============================================
+# 临时文件
+# ============================================
+*.tmp
+*.temp
+*.cache
+.cache/
+tmp/
+temp/
+
+# ============================================
+# 构建输出
+# ============================================
+dist/
+build/
+out/
+www/
+.output/
+
+# ============================================
+# 依赖目录
+# ============================================
+node_modules/
+vendor/
+bower_components/
+
+# ============================================
+# 环境配置文件
+# ============================================
+.env
+.env.local
+.env.*.local
+.env.backup
+*.env
+
+# 保留示例文件
+!.env.example
+!backend/.env.example
+
+# ============================================
+# 数据库文件
+# ============================================
+*.sqlite
+*.sqlite3
+*.db
+
+# ============================================
+# 备份文件
+# ============================================
+*.bak
+*.backup
+*.old
+*~
+
+# ============================================
+# 压缩文件
+# ============================================
+*.zip
+*.tar
+*.tar.gz
+*.rar
+*.7z
+
+# ============================================
+# 测试覆盖率
+# ============================================
+coverage/
+.nyc_output/
+*.lcov
+.coverage
+htmlcov/
+.pytest_cache/
+.phpunit.result.cache
+
+# ============================================
+# 包管理器锁文件（可选）
+# ============================================
+# 如果团队使用不同的包管理器，可以忽略锁文件
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+# composer.lock
+
+# ============================================
+# 文档生成
+# ============================================
+docs/_build/
+site/
+
+# ============================================
+# 其他
+# ============================================
+.sass-cache/
+*.pid
+*.seed
+*.pid.lock
+.grunt
+.lock-wscript
+lib-cov
+pids
+*.tsbuildinfo
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# ============================================
+# 项目特定文件（根据需要调整）
+# ============================================
+# 如果不想提交某些文档，可以在这里添加
+# 测试报告.md
+# 当前状态.md
+# 系统运行正常.md

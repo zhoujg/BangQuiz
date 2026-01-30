@@ -1,0 +1,7 @@
+{
+  "name": "TOGAF Master",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
