@@ -91,11 +91,21 @@ export class HomePage implements OnInit {
     this.router.navigate(['/analysis']);
   }
 
-  goToADMMap() {
-    this.router.navigate(['/adm-map']);
+  async goToADMMap() {
+    const alert = await this.alertController.create({
+      header: '功能开发中',
+      message: 'ADM 架构开发方法地图功能正在开发中，敬请期待！',
+      buttons: ['确定']
+    });
+    await alert.present();
   }
 
-  openProfile() {
-    this.router.navigate(['/profile']);
+  async openProfile() {
+    const alert = await this.alertController.create({
+      header: '功能开发中',
+      message: '个人资料功能正在开发中，敬请期待！',
+      buttons: ['确定']
+    });
+    await alert.present();
   }
 }
