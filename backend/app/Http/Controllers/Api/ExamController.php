@@ -71,16 +71,17 @@ class ExamController extends Controller
      */
     public function getUnitQuestions(int $unitId)
     {
-        $unit = LearningUnit::find($unitId);
+        $unit = LearningUnit::with('learningOutcomes')->find($unitId);
         
         if (!$unit) {
             return response()->json(['error' => '学习单元不存在'], 404);
         }
         
-        // 获取同一个测验包下的所有题目
-        $questions = Question::whereHas('exam', function($query) use ($unit) {
-            $query->where('exam_package_id', $unit->exam_package_id);
-        })->get();
+        // 获取该学习单元下所有学习成果的ID
+        $outcomeIds = $unit->learningOutcomes->pluck('id');
+        
+        // 获取关联到这些学习成果的题目
+        $questions = Question::whereIn('learning_outcome_id', $outcomeIds)->get();
         
         return response()->json($questions);
     }

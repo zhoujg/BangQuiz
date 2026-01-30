@@ -20,4 +20,9 @@ class Question extends Model
     {
         return $this->belongsTo(Exam::class);
     }
+
+    public function learningOutcome(): BelongsTo
+    {
+        return $this->belongsTo(LearningOutcome::class);
+    }
 }
