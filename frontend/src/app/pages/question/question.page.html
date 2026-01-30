@@ -21,10 +21,9 @@
       <!-- 选项 -->
       <ion-radio-group [(ngModel)]="selectedAnswer" [disabled]="showResult">
         <ion-item *ngFor="let option of question.options | keyvalue">
-          <ion-label class="ion-text-wrap">
+          <ion-radio slot="start" [value]="option.key" labelPlacement="end" class="ion-text-wrap">
             <strong>{{ option.key }}.</strong> {{ option.value }}
-          </ion-label>
-          <ion-radio slot="start" [value]="option.key"></ion-radio>
+          </ion-radio>
         </ion-item>
       </ion-radio-group>
 
