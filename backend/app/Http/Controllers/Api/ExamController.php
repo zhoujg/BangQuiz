@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ExamPackage;
 use App\Models\Exam;
 use App\Models\LearningUnit;
+use App\Models\Question;
 use Illuminate\Http\Request;
 
 class ExamController extends Controller
@@ -70,17 +71,16 @@ class ExamController extends Controller
      */
     public function getUnitQuestions(int $unitId)
     {
-        $unit = LearningUnit::with(['learningOutcomes.questions'])->find($unitId);
+        $unit = LearningUnit::find($unitId);
         
         if (!$unit) {
             return response()->json(['error' => '学习单元不存在'], 404);
         }
         
-        // 收集所有题目
-        $questions = collect();
-        foreach ($unit->learningOutcomes as $outcome) {
-            $questions = $questions->merge($outcome->questions);
-        }
+        // 获取同一个测验包下的所有题目
+        $questions = Question::whereHas('exam', function($query) use ($unit) {
+            $query->where('exam_package_id', $unit->exam_package_id);
+        })->get();
         
         return response()->json($questions);
     }
