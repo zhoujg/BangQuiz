@@ -1,11 +1,45 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/learning-path"></ion-back-button>
+    </ion-buttons>
     <ion-title>刷题练习</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="exitPractice()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  
+  <!-- 进度条 -->
+  <ion-toolbar *ngIf="totalQuestions > 0">
+    <ion-progress-bar [value]="currentQuestionIndex / totalQuestions"></ion-progress-bar>
+    <ion-text class="ion-padding-horizontal">
+      <small>第 {{ currentQuestionIndex + 1 }} / {{ totalQuestions }} 题</small>
+    </ion-text>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-card *ngIf="question">
+  <!-- 完成提示 -->
+  <ion-card *ngIf="isCompleted">
+    <ion-card-header>
+      <ion-card-title>🎉 练习完成！</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>你已经完成了本单元的所有题目练习。</p>
+      <p>正确率：{{ correctCount }} / {{ totalQuestions }} ({{ (correctCount / totalQuestions * 100).toFixed(0) }}%)</p>
+      
+      <ion-button expand="block" (click)="restartPractice()">
+        重新练习
+      </ion-button>
+      <ion-button expand="block" fill="outline" routerLink="/learning-path">
+        返回学习路径
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="question && !isCompleted">
     <!-- 题目场景 -->
     <ion-card-header *ngIf="question.scenario">
       <ion-card-subtitle>场景案例</ion-card-subtitle>
