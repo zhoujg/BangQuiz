@@ -16,6 +16,7 @@ Route::get('/exam-packages/{id}/exams', [ExamController::class, 'getExams']);
 
 // 学习路径
 Route::get('/learning-units', [ExamController::class, 'getLearningUnits']);
+Route::get('/learning-units/{id}/questions', [ExamController::class, 'getUnitQuestions']);
 Route::get('/learning-progress/{packageId}', [AnalysisController::class, 'getLearningProgress']);
 
 // 题目

@@ -80,20 +80,25 @@ export class LearningPathPage implements OnInit {
   }
 
   startUnit(unitId: number) {
-    this.router.navigate(['/unit-practice', unitId]);
+    this.router.navigate(['/question'], { 
+      queryParams: { unitId: unitId, mode: 'unit-practice' } 
+    });
   }
 
   viewUnitDetails(unitId: number) {
-    this.router.navigate(['/unit-details', unitId]);
+    // 暂时也导航到练习页面
+    this.startUnit(unitId);
   }
 
   goToMockExam() {
     const examType = this.selectedLevel === 'level1' ? 'level1-mock' : 'level2-mock';
-    this.router.navigate(['/mock-exam', examType]);
+    this.router.navigate(['/question'], { 
+      queryParams: { examType: examType, mode: 'mock-exam' } 
+    });
   }
 
   showLearningTips() {
-    // 显示学习建议弹窗
-    this.router.navigate(['/learning-tips']);
+    // 显示学习建议 - 暂时导航到分析页面
+    this.router.navigate(['/analysis']);
   }
 }

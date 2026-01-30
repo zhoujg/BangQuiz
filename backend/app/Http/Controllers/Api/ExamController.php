@@ -64,4 +64,26 @@ class ExamController extends Controller
         
         return response()->json($units);
     }
+
+    /**
+     * 获取指定学习单元的题目
+     */
+    public function getUnitQuestions(int $unitId)
+    {
+        $unit = LearningUnit::with(['learningOutcomes.questions' => function($query) {
+            $query->where('is_active', true);
+        }])->find($unitId);
+        
+        if (!$unit) {
+            return response()->json(['error' => '学习单元不存在'], 404);
+        }
+        
+        // 收集所有题目
+        $questions = collect();
+        foreach ($unit->learningOutcomes as $outcome) {
+            $questions = $questions->merge($outcome->questions);
+        }
+        
+        return response()->json($questions);
+    }
 }

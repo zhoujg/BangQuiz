@@ -45,6 +45,12 @@ export class ApiService {
     });
   }
 
+  getUnitQuestions(unitId: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/learning-units/${unitId}/questions`, {
+      headers: this.getHeaders()
+    });
+  }
+
   submitAnswer(questionId: number, selectedOption: string, timeSpent: number): Observable<any> {
     return this.http.post(`${this.apiUrl}/questions/answer`, 
       { 
