@@ -12,8 +12,8 @@
   </ion-toolbar>
   
   <!-- 进度条 -->
-  <ion-toolbar *ngIf="totalQuestions > 0">
-    <ion-progress-bar [value]="currentQuestionIndex / totalQuestions"></ion-progress-bar>
+  <ion-toolbar *ngIf="totalQuestions > 0 && !isCompleted">
+    <ion-progress-bar [value]="(currentQuestionIndex + 1) / totalQuestions"></ion-progress-bar>
     <ion-text class="ion-padding-horizontal">
       <small>第 {{ currentQuestionIndex + 1 }} / {{ totalQuestions }} 题</small>
     </ion-text>
