@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '../../services/api.service';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +15,8 @@ export class HomePage implements OnInit {
 
   constructor(
     private router: Router,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private alertController: AlertController
   ) {}
 
   ngOnInit() {
@@ -57,8 +59,32 @@ export class HomePage implements OnInit {
     this.router.navigate(['/learning-path']);
   }
 
-  goToMockExam() {
-    this.router.navigate(['/mock-exam']);
+  async goToMockExam() {
+    // 弹出选择对话框，让用户选择考试级别
+    const alert = await this.alertController.create({
+      header: '选择模拟考试级别',
+      message: '请选择你要参加的模拟考试',
+      buttons: [
+        {
+          text: 'Level 1 Foundation',
+          handler: () => {
+            this.router.navigate(['/package-list']);
+          }
+        },
+        {
+          text: 'Level 2 Practitioner',
+          handler: () => {
+            this.router.navigate(['/package-list']);
+          }
+        },
+        {
+          text: '取消',
+          role: 'cancel'
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
   goToAnalysis() {

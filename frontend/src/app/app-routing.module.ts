@@ -22,6 +22,14 @@ const routes: Routes = [
   {
     path: 'analysis',
     loadChildren: () => import('./pages/analysis/analysis.module').then(m => m.AnalysisPageModule)
+  },
+  {
+    path: 'package-list',
+    loadChildren: () => import('./pages/package-list/package-list.module').then(m => m.PackageListPageModule)
+  },
+  {
+    path: 'exam-list/:id',
+    loadChildren: () => import('./pages/exam-list/exam-list.module').then(m => m.ExamListPageModule)
   }
 ];
 

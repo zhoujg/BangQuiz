@@ -29,6 +29,6 @@ export class PackageListPage implements OnInit {
   }
 
   selectPackage(packageId: number) {
-    this.router.navigate(['/exams', packageId]);
+    this.router.navigate(['/exam-list', packageId]);
   }
 }
